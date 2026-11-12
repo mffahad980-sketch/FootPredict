@@ -1,0 +1,1 @@
+FootPredict project setup.
