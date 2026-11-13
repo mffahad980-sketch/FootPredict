@@ -1,3 +1,6 @@
-// Static site build: the deployable HTML is already in /public.
-// Netlify packages serverless functions from /netlify/functions separately.
-console.log('FootPredict static site build complete.');
+import { copyFileSync, mkdirSync } from 'node:fs';
+
+mkdirSync('public', { recursive: true });
+copyFileSync('index.html', 'public/index.html');
+
+console.log('FootPredict build completed.');
