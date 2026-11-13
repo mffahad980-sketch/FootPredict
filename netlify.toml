@@ -1,4 +1,4 @@
-herevvvv
+
 [build]
   command = "npm run build"
   publish = "."
