@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FootPredict — Football Intelligence</title>
+<style>
+:root{--bg:#080d18;--panel:#111a2b;--panel2:#172338;--line:#26344c;--text:#eef4ff;--muted:#9aabc4;--green:#48df9a;--blue:#72a7ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% -10%,#1a3150 0,transparent 35%),var(--bg);color:var(--text);font:15px/1.5 Inter,system-ui,Arial,sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:0 20px}.top{border-bottom:1px solid var(--line);background:#080d18dd;position:sticky;top:0;backdrop-filter:blur(12px);z-index:2}.nav{height:70px;display:flex;align-items:center;justify-content:space-between}.brand{font-size:22px;font-weight:850;letter-spacing:-.7px}.brand span{color:var(--green)}.nav small{color:var(--muted)}.hero{padding:54px 0 30px}.eyebrow{color:var(--green);font-weight:750;letter-spacing:2px;font-size:11px}.hero h1{font-size:clamp(34px,6vw,58px);line-height:1.04;letter-spacing:-2px;margin:12px 0}.hero p{color:var(--muted);max-width:650px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.btn{border:1px solid var(--line);padding:11px 16px;border-radius:10px;color:var(--text);background:var(--panel);font-weight:700}.btn.primary{background:var(--green);color:#062016;border-color:var(--green)}.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:28px 0 14px}.section-head h2{margin:0;font-size:22px}.section-head p{margin:0;color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{background:linear-gradient(145deg,var(--panel),#0d1524);border:1px solid var(--line);border-radius:16px;padding:18px}.tag{display:inline-block;color:var(--green);background:#123528;padding:4px 8px;border-radius:20px;font-size:11px;font-weight:800}.match{display:flex;justify-content:space-between;align-items:center;margin:17px 0}.team{font-weight:750}.vs{color:var(--muted);font-size:12px}.market{color:var(--muted);font-size:12px}.pick{font-size:19px;font-weight:800;margin:4px 0}.confidence{color:var(--blue);font-size:12px}.empty{border:1px dashed #40516b;border-radius:16px;padding:28px;text-align:center;color:var(--muted);grid-column:1/-1}.two{display:grid;grid-template-columns:1.3fr .7fr;gap:14px}.feature{min-height:150px}.feature h3{margin:8px 0}.feature p{color:var(--muted);margin:0}.foot{border-top:1px solid var(--line);margin-top:40px;padding:24px 0;color:var(--muted);font-size:12px}.pill{font-size:11px;color:#c7d4e8;border:1px solid var(--line);padding:5px 8px;border-radius:20px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.two{grid-template-columns:1fr}.hero{padding-top:38px}.nav small{display:none}}
+</style></head>
+<body>
+<header class="top"><div class="wrap nav"><div class="brand">FOOT<span>PREDICT</span></div><small>FOOTBALL • DATA • ANALYSIS</small><span class="pill">Independent predictions</span></div></header>
+<main class="wrap">
+<section class="hero"><div class="eyebrow">SMARTER FOOTBALL INSIGHTS</div><h1>See the game.<br><span style="color:var(--green)">Understand the numbers.</span></h1><p>Match previews, data-led analysis and transparent prediction records — in one place. Predictions are estimates, not guarantees.</p><div class="actions"><a class="btn primary" href="#predictions">Explore predictions ↓</a><a class="btn" href="#method">How we analyse</a></div></section>
+<div class="section-head" id="predictions"><div><h2>Today's predictions</h2><p>Fixtures and results from the connected football data provider.</p></div><span class="pill" id="feed-status">Connecting data feed…</span></div>
+<section class="grid" id="matches"><div class="empty">Loading fixtures and results…</div></section>
+<div class="section-head" id="method"><div><h2>What goes into an analysis?</h2><p>Signals that help explain a prediction.</p></div></div>
+<section class="two">
+<div class="card feature"><span class="tag">DATA FIRST</span><h3>Form, goals & head-to-head</h3><p>Recent performance, home/away splits, scoring and conceding patterns, opponent strength and relevant team news.</p></div>
+<div class="card feature"><span class="tag">TRANSPARENCY</span><h3>Track every result</h3><p>Record published picks, timestamps, odds snapshots when available, and win/loss/void outcomes.</p></div>
+</section>
+<div class="section-head"><div><h2>Prediction principles</h2><p>Quality over quantity.</p></div></div>
+<section class="grid">
+<div class="card"><span class="tag">01</span><h3>Evidence-led</h3><p class="market">No pick should be published without enough reliable supporting data.</p></div>
+<div class="card"><span class="tag">02</span><h3>Honest confidence</h3><p class="market">Confidence scores are estimates, not probabilities unless calibrated against historical results.</p></div>
+<div class="card"><span class="tag">03</span><h3>Public record</h3><p class="market">Keep losing picks visible. Measure long-term performance, not only winning streaks.</p></div>
+</section>
+</main><footer class="foot"><div class="wrap">© 2026 FootPredict. Sports analysis and educational information only. No deposits, withdrawals, payments or betting transactions.</div></footer>
+<script>
+const matchRoot = document.getElementById('matches');
+const feedStatus = document.getElementById('feed-status');
+function dateLabel(value) {
+  if (!value) return 'Date TBC';
+  return new Intl.DateTimeFormat('en-GB', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Dhaka' }).format(new Date(value));
+}
+function esc(value) {
+  return String(value ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function renderMatches(matches) {
+  if (!matches.length) {
+    matchRoot.innerHTML = '<div class="empty"><strong style="color:var(--text)">No matches returned for this date range</strong><br>This may depend on the competitions available in your football-data.org plan.</div>';
+    return;
+  }
+  matchRoot.innerHTML = matches.map((m) => {
+    const score = m.homeScore !== null && m.awayScore !== null ? `${m.homeScore} – ${m.awayScore}` : 'vs';
+    const status = m.status === 'FINISHED' ? 'FULL TIME' : m.status === 'IN_PLAY' ? 'LIVE' : m.status.replaceAll('_', ' ');
+    return `<article class="card"><span class="tag">${esc(status)}</span><div class="market">${esc(m.competition)} · ${esc(dateLabel(m.utcDate))}</div><div class="match"><span class="team">${esc(m.homeTeam)}</span><strong>${esc(score)}</strong><span class="team">${esc(m.awayTeam)}</span></div><div class="market">${m.matchday ? `Matchday ${esc(m.matchday)}` : 'Fixture information'}</div></article>`;
+  }).join('');
+}
+async function loadMatches() {
+  try {
+    const response = await fetch('/.netlify/functions/matches');
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Data feed unavailable');
+    renderMatches(data.matches || []);
+    feedStatus.textContent = `${data.count} matches · ${data.dateFrom} to ${data.dateTo}`;
+  } catch (error) {
+    matchRoot.innerHTML = `<div class="empty"><strong style="color:var(--text)">Football data is not available yet</strong><br>${esc(error.message)}<br>Check the Netlify function deployment and your football-data.org plan.</div>`;
+    feedStatus.textContent = 'Feed needs attention';
+  }
+}
+loadMatches();
+</script></body></html>
